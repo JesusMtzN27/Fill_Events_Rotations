@@ -7,3 +7,7 @@ app = FastAPI()
 # Incluir los endpoints
 app.include_router(employees.router)
 app.include_router(events_rotations.router)
+
+@app.get("/")
+def read_root():
+    return {"message": "APIs is running!"}
