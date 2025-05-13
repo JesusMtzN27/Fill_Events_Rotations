@@ -1,0 +1,5 @@
+fastapi[all]==0.103.1
+uvicorn==0.23.2
+sqlalchemy==2.0.21
+psycopg2==2.9.6
+python-dotenv==1.0.0
