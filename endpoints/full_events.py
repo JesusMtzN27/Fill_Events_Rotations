@@ -7,18 +7,22 @@ from models.employee import EmployeeTenant
 from models.events_rotations import EventRotationTenant
 from sqlalchemy import insert
 from datetime import date
+from utils import convert_and_process_employees # Importar la función de utils.py
 
 router = APIRouter()
 
 @router.post("/full_events/{tenant_id}")
 async def create_rotation_events(tenant_id: str, db: AsyncSession = Depends(get_db)):
+    # Obtener y procesar empleados para convertir su payrollNumberBoss_id a string
+    # await convert_and_process_employees(db, tenant_id)
+
     # Obtener todos los empleados activos para el tenant específico
     query = select(EmployeeTenant)
     result = await db.execute(query)
     employees = result.scalars().all()
 
     if not employees:
-        return {"message": "No active employees found for this tenant."}
+        return {"message": f"No active employees found for Tenant: {tenant_id}."}
 
     # Crear un evento de rotación para cada empleado
     events = []
@@ -37,4 +41,4 @@ async def create_rotation_events(tenant_id: str, db: AsyncSession = Depends(get_
     db.add_all(events)
     await db.commit()
 
-    return {"message": f"Created {len(events)} rotation events."}
+    return {"message": f"Created {len(events)} rotation events for Tenant: {tenant_id}."}

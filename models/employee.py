@@ -11,7 +11,7 @@ class EmployeeTenant(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False)
     department_id = Column(Integer, nullable=False)
-    # payroll_number_boss_id = Column(Integer, nullable=True)
+    # payrollNumberBoss_id = Column(String, nullable=True)
     dateHiring = Column(Date, nullable=True)
 
     def __repr__(self):
