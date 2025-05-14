@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, Date
 from sqlalchemy.ext.declarative import declarative_base
+from tools.converts import DynamicSupervisorIDType
 
 # Crear la base para las clases
 Base = declarative_base()
@@ -11,7 +12,7 @@ class EmployeeTenant(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False)
     department_id = Column(Integer, nullable=False)
-    # payroll_number_boss_id = Column(Integer, nullable=True)
+    payroll_number_boss_id = Column(DynamicSupervisorIDType, nullable=True)
     dateHiring = Column(Date, nullable=True)
 
     def __repr__(self):

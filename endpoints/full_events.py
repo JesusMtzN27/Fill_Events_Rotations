@@ -27,7 +27,7 @@ async def create_rotation_events(tenant_id: str, db: AsyncSession = Depends(get_
         event = EventRotationTenant(
             employee_id=employee.id,
             department_id=employee.department_id,
-            # supervisor_id=employee.payroll_number_boss_id,  # Si es necesario
+            supervisor_id=str(employee.payroll_number_boss_id),  # Si es necesario
             eventType=1,  # Esto podría ser el nombre del evento o un valor que definas
             eventDate=employee.dateHiring,  # Asumiendo que el evento se registra con la fecha de hoy
         )
