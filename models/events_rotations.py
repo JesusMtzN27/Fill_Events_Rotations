@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, BigInteger
+from sqlalchemy import Column, Integer, String, Date, BigInteger, TIMESTAMP
 from sqlalchemy.ext.declarative import declarative_base
 
 # Crear la base para las clases
@@ -14,6 +14,8 @@ class EventRotationTenant(Base):
     supervisor_id = Column(String(255), nullable=True)  # Solo como referencia del jefe
     eventType = Column(BigInteger, nullable=False)
     eventDate = Column(Date, nullable=False)
+    created_at = Column(TIMESTAMP, nullable=False)
+    updated_at = Column(TIMESTAMP, nullable=False)
 
     def __repr__(self):
         return f"<EventRotationTenant(id={self.id}, employee_id={self.employee_id}, event_type={self.event_type})>"
