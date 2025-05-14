@@ -13,12 +13,12 @@ router = APIRouter()
 @router.post("/full_events/{tenant_id}")
 async def create_rotation_events(tenant_id: str, db: AsyncSession = Depends(get_db)):
     # Obtener todos los empleados activos para el tenant específico
-    query = select(EmployeeTenant)
+    query = select(EmployeeTenant).order_by(EmployeeTenant.id)
     result = await db.execute(query)
     employees = result.scalars().all()
 
     if not employees:
-        return {"message": "No active employees found for this tenant."}
+        return {"message": f"No active employees found for Tenant: {tenant_id}."}
 
     # Crear un evento de rotación para cada empleado
     events = []
@@ -27,7 +27,7 @@ async def create_rotation_events(tenant_id: str, db: AsyncSession = Depends(get_
         event = EventRotationTenant(
             employee_id=employee.id,
             department_id=employee.department_id,
-            supervisor_id=str(employee.payroll_number_boss_id),  # Si es necesario
+            supervisor_id=str(employee.payrollNumberBoss_id),  # Si es necesario
             eventType=1,  # Esto podría ser el nombre del evento o un valor que definas
             eventDate=employee.dateHiring,  # Asumiendo que el evento se registra con la fecha de hoy
         )
@@ -37,4 +37,4 @@ async def create_rotation_events(tenant_id: str, db: AsyncSession = Depends(get_
     db.add_all(events)
     await db.commit()
 
-    return {"message": f"Created {len(events)} rotation events."}
+    return {"message": f"Created {len(events)} rotation events for Tenant: {tenant_id}."}
