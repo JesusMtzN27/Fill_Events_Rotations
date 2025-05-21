@@ -12,6 +12,7 @@ class EventRotationTenant(Base):
     employee_id = Column(BigInteger, nullable=False)  # Solo como referencia del empleado
     department_id = Column(BigInteger, nullable=False)  # Solo como referencia del departamento
     supervisor_id = Column(String(255), nullable=True)  # Solo como referencia del jefe
+    supervisorName = Column(String(255), nullable=True)  # Solo como referencia del jefe
     eventType = Column(BigInteger, nullable=False)
     eventDate = Column(Date, nullable=False)
     created_at = Column(TIMESTAMP, nullable=False)
