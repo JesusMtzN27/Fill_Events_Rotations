@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy import cast, String
 from datetime import datetime
 from db import get_db
 from models.events_rotations import EventRotationTenant
@@ -29,7 +30,7 @@ async def update_supervisor_names(tenant_id: str, db: AsyncSession = Depends(get
             else:
                 user_q = await db.execute(
                     select(UserTenant.fullName)
-                    .where(UserTenant.payrollNumber == sup_id)
+                    .where(cast(UserTenant.payrollNumber, String) == sup_id)
                 )
                 user = user_q.scalar_one_or_none()
                 full_name = user if user else None
