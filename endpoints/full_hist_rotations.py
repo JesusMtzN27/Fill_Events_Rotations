@@ -18,7 +18,11 @@ async def calculate_rotation_summary(tenant_id: str, db: AsyncSession = Depends(
     )
     first_date = first_date_q.scalar()
     if first_date is None:
-        raise HTTPException(status_code=404, detail="No event records found for tenant")
+        return {
+            "message": f"No event records found for tenant {tenant_id}.",
+            "data": []
+        }
+        # raise HTTPException(status_code=404, detail="No event records found for tenant")
 
     # Fecha actual
     today = date.today()
